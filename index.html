@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The chicken lays eggs 🐔🥚</title>
+  <style>
+    :root {
+      --bg: #fffdf7;
+      --card: #ffffff;
+      --accent: #f6a623;
+      --text: #333333;
+      --muted: #888888;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 24px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 40px 48px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      max-width: 480px;
+    }
+    h1 { margin: 0 0 8px; font-size: 28px; }
+    p.sub { color: var(--muted); margin: 0 0 24px; }
+    #chicken { font-size: 72px; transition: transform .12s ease; }
+    #chicken.shake { transform: translateY(-8px) rotate(-6deg); }
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 28px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    button:hover { opacity: .9; }
+    #count { margin-top: 20px; font-size: 15px; color: var(--muted); }
+    .eggs { margin-top: 16px; font-size: 28px; min-height: 34px; word-break: break-all; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div id="chicken">🐔</div>
+    <h1>The chicken lays eggs</h1>
+    <p class="sub">这是一个起点页面，随便改、随便玩。</p>
+    <button id="layBtn">下个蛋 🥚</button>
+    <div id="count">已经下了 0 个蛋</div>
+    <div class="eggs" id="eggTray"></div>
+  </div>
+
+  <script>
+    let count = 0;
+    const chicken = document.getElementById('chicken');
+    const btn = document.getElementById('layBtn');
+    const countEl = document.getElementById('count');
+    const tray = document.getElementById('eggTray');
+
+    btn.addEventListener('click', () => {
+      count++;
+      chicken.classList.add('shake');
+      setTimeout(() => chicken.classList.remove('shake'), 120);
+      countEl.textContent = `已经下了 ${count} 个蛋`;
+      tray.textContent += '🥚';
+    });
+  </script>
+</body>
+</html>
