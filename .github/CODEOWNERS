@@ -1,0 +1,4 @@
+# 默认：所有路径的改动都需要仓库 owner 评审
+# 按团队分工后可按目录细分，例如：
+# /docs/        @zhangysir @teammate-a
+* @zhangysir
