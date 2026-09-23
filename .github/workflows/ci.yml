@@ -1,0 +1,29 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 禁止编辑器注入属性（如 data-page-node-id）
+        run: |
+          if grep -rn "data-page-node-id" --include="*.html" .; then
+            echo "::error::检测到编辑器注入的 data-page-node-id 属性，请移除后再提交"
+            exit 1
+          fi
+
+      - name: 敏感信息扫描
+        run: |
+          if grep -rniE "(api[_-]?key|secret|password|token)[[:space:]]*[:=][[:space:]]*['\"][^'\"]{8,}" --include="*.html" --include="*.js" --include="*.json" .; then
+            echo "::error::疑似敏感信息硬编码，请检查"
+            exit 1
+          fi
+
+      - name: HTML 静态检查 (htmlhint)
+        run: npx --yes htmlhint --config .htmlhintrc.json "**/*.html"
